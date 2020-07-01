@@ -40,3 +40,19 @@ exports.updateUser = (req, res) => {
         res.status(400).json(err)
     })
 }
+
+
+// delete
+exports.archive = (req, res) => {
+    const id = req.params.id;
+    // const isActive = req.body.is_active === false;
+    UserModel.findByIdAndUpdate(id, {
+        is_active: false
+    }).then(() => {
+        res.status(200).json({
+            message: "User archivé"
+        })
+    }).catch(err => {
+        res.status(400).json(err)
+    })
+}
