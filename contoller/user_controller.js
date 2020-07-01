@@ -57,3 +57,19 @@ exports.archive = (req, res) => {
         res.status(400).json(err)
     })
 }
+
+
+// is_active = true
+// permettre au user de réactiver son compte
+exports.activeUser = (req, res) => {
+    const id = req.params.id;
+    UserModel.findByIdAndUpdate(id, {
+        is_active: true
+    }).then(() => {
+        res.status(200).json({
+            message: "User activé"
+        })
+    }).catch(err => {
+        res.status(400).json(err)
+    })
+}
