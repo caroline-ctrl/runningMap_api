@@ -1,3 +1,7 @@
+## QUICK START
+Install dependencies : `npm init `
+Start Node Server: `npm start`
+
 ## INITIALISATION DU PROJET
 npm init
 
