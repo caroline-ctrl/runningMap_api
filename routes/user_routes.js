@@ -3,6 +3,7 @@ const express = require('express');
 
 const router = express.Router();
 
+router.put('/activer/:id', userController.activeUser);
 router.put('/archive/:id', userController.archive);
 router.put('/update/:id', userController.updateUser);
 router.get('/user/:id', userController.getById);
