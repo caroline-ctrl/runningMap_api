@@ -13,4 +13,15 @@ exports.createUser = (req, res) => {
     }).catch(err => {
         res.status(400).json(err)
     })
+};
+
+
+// getById
+exports.getById = (req, res) => {
+    const id = req.params.id;
+    UserModel.findById(id).then(user => {
+        res.status(200).json(user)
+    }).catch(err => {
+        res.status(400).json(err)
+    })
 }
