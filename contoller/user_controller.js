@@ -1,5 +1,4 @@
 const UserModel = require('../models/User_model');
-const mongodb = require('../app');
 
 // create user
 exports.createUser = (req, res) => {
