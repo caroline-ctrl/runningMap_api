@@ -43,9 +43,10 @@ exports.updateUser = (req, res) => {
 
 
 // delete
+// le delete permet d'archiver le user et non de le supprimer
+// passe le is_active en false.
 exports.archive = (req, res) => {
     const id = req.params.id;
-    // const isActive = req.body.is_active === false;
     UserModel.findByIdAndUpdate(id, {
         is_active: false
     }).then(() => {
