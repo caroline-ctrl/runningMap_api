@@ -33,13 +33,13 @@ const runningSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    token: {
-        type: String,
-        required: false
-    },
     is_active: {
         type: Boolean,
         required: true
+    },
+    token: {
+        type: String,
+        required: false
     }
     // size: {
     //     type: Number,
