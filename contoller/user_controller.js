@@ -25,3 +25,18 @@ exports.getById = (req, res) => {
         res.status(400).json(err)
     })
 }
+
+
+// update
+exports.updateUser = (req, res) => {
+    const id = req.params.id;
+    UserModel.findByIdAndUpdate(id, {
+        ...req.body
+    }).then(() => {
+        res.status(200).json({
+            message: "User modifié"
+        })
+    }).catch(err => {
+        res.status(400).json(err)
+    })
+}
