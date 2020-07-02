@@ -15,6 +15,16 @@ exports.createUser = (req, res) => {
 };
 
 
+// getAll
+exports.getAll = (req, res) => {
+    UserModel.find().then(users => {
+        res.status(200).json(users)
+    }).catch(err => {
+        res.status(400).json(err);
+    })
+}
+
+
 // getById
 exports.getById = (req, res) => {
     const id = req.params.id;
