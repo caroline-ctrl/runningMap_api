@@ -1,9 +1,30 @@
 const UserModel = require('../models/User_model');
+const bcrypt = require('bcrypt-nodejs');
 
 // create user
 exports.createUser = (req, res) => {
+    let password1 = req.body.password
+    let password = bcrypt.hashSync(password1);
+    let firstname = req.body.firstname;
+    let lastname = req.body.lastname;
+    let pseudo = req.body.pseudo;
+    let mail = req.body.mail;
+    let city = req.body.city;
+    let gender = req.body.gender;
+    let age = req.body.age;
+    let is_active = req.body.is_active;
+    // let token = req.body.token;
     const userInstance = new UserModel({
-        ...req.body
+        firstname,
+        lastname,
+        pseudo,
+        mail,
+        city,
+        gender,
+        age,
+        password,
+        is_active,
+        // token
     });
     userInstance.save().then(() => {
         res.status(200).json({
@@ -12,6 +33,7 @@ exports.createUser = (req, res) => {
     }).catch(err => {
         res.status(400).json(err)
     })
+
 };
 
 

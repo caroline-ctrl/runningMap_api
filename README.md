@@ -42,3 +42,7 @@ module.exports = app;
 It builds the server and listens on port 3000
 const app = require('./app');
 const http = require('http');
+
+
+## CRYPTAGE PASSWORD
+npm install bcrypt-nodejs
