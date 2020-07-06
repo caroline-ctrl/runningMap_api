@@ -15,6 +15,7 @@ const runningSchema = mongoose.Schema({
     },
     mail: {
         type: String,
+        index: { unique: true },
         required: true
     },
     city: {

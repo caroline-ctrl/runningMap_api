@@ -104,3 +104,26 @@ exports.activeUser = (req, res) => {
         res.status(400).json(err)
     })
 }
+
+
+// login
+// connexion
+//         
+
+exports.login = (req, res) => {
+    const mail = req.body.mail;
+    const pass = req.body.password;
+    // recupère le user a partir du pseudo, 
+    // match renferme l'objet user
+    UserModel.findOne({mail: mail}, (error, match) => {
+        if(match !== null){
+            bcrypt.compareSync(pass, match.password);
+        }
+    }).then(user => {
+        res.status(200).json(user)
+    }).catch(err => {
+        res.status(400).json(err)
+    })
+}
+
+
