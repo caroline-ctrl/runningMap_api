@@ -61,8 +61,30 @@ exports.getById = (req, res) => {
 // update
 exports.updateUser = (req, res) => {
     const id = req.params.id;
+    
+    let password1 = req.body.password
+    let password = bcrypt.hashSync(password1);
+    let firstname = req.body.firstname;
+    let lastname = req.body.lastname;
+    let pseudo = req.body.pseudo;
+    let mail = req.body.mail;
+    let city = req.body.city;
+    let gender = req.body.gender;
+    let age = req.body.age;
+    let is_active = req.body.is_active;
+    // let token = req.body.token;
+
     UserModel.findByIdAndUpdate(id, {
-        ...req.body
+        firstname,
+        lastname,
+        pseudo,
+        mail,
+        city,
+        gender,
+        age,
+        password,
+        is_active,
+        // token
     }).then(() => {
         res.status(200).json({
             message: "User modifié"
@@ -127,3 +149,15 @@ exports.login = (req, res) => {
 }
 
 
+// exports.hashPassword = (req, res) => {
+//     let password1 = req.body.password
+//     let password = bcrypt.hashSync(password1);
+//     let firstname = req.body.firstname;
+//     let lastname = req.body.lastname;
+//     let pseudo = req.body.pseudo;
+//     let mail = req.body.mail;
+//     let city = req.body.city;
+//     let gender = req.body.gender;
+//     let age = req.body.age;
+//     let is_active = req.body.is_active;
+// }
