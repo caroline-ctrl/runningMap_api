@@ -9,6 +9,6 @@ router.put('/update/:id', userController.updateUser);
 router.get('/user/:id', userController.getById);
 router.get('/users', userController.getAll);
 router.post('/create', userController.createUser);
-router.get('/log', userController.login);
+router.post('/log', userController.login);
 
 module.exports = router;

@@ -12,7 +12,7 @@ exports.createUser = (req, res) => {
     let city = req.body.city;
     let gender = req.body.gender;
     let age = req.body.age;
-    let is_active = req.body.is_active;
+    let is_active = true;
     // let token = req.body.token;
     const userInstance = new UserModel({
         firstname,
@@ -61,7 +61,8 @@ exports.getById = (req, res) => {
 // update
 exports.updateUser = (req, res) => {
     const id = req.params.id;
-    
+
+    // this.hashPassword();
     let password1 = req.body.password
     let password = bcrypt.hashSync(password1);
     let firstname = req.body.firstname;
@@ -129,13 +130,10 @@ exports.activeUser = (req, res) => {
 
 
 // login
-// connexion
-//         
-
 exports.login = (req, res) => {
     const mail = req.body.mail;
     const pass = req.body.password;
-    // recupère le user a partir du pseudo, 
+    // recupère le user a partir du mail, 
     // match renferme l'objet user
     UserModel.findOne({mail: mail}, (error, match) => {
         if(match !== null){
@@ -150,9 +148,9 @@ exports.login = (req, res) => {
 
 
 // exports.hashPassword = (req, res) => {
+//     let firstname = req.body.firstname;
 //     let password1 = req.body.password
 //     let password = bcrypt.hashSync(password1);
-//     let firstname = req.body.firstname;
 //     let lastname = req.body.lastname;
 //     let pseudo = req.body.pseudo;
 //     let mail = req.body.mail;
