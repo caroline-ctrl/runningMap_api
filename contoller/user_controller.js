@@ -147,6 +147,18 @@ exports.login = (req, res) => {
 }
 
 
+// getByPseudo
+exports.getByPseudo = (req, res) => {
+    const pseudo = req.cookie.pseudo;
+    UserModel.findOne({pseudo: pseudo})
+    .then(user => {
+        res.status(200).json(user)
+    }).catch(err => {
+        res.status(400).json(err)
+    })
+}
+
+
 // exports.hashPassword = (req, res) => {
 //     let firstname = req.body.firstname;
 //     let password1 = req.body.password

@@ -11,11 +11,12 @@ const runningSchema = mongoose.Schema({
     },
     pseudo: {
         type: String,
+        unique: true,
         required: true
     },
     mail: {
         type: String,
-        index: { unique: true },
+        unique: true,
         required: true
     },
     city: {
