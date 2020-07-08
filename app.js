@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const userRoute = require('./routes/user_routes');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 
 const app = express();
 
@@ -18,6 +19,8 @@ mongoose.connect('mongodb+srv://carod:clemL34270+@cluster0-fbriu.gcp.mongodb.net
 app.use(bodyParser.urlencoded({
     extended: true
 }));
+
+app.use(cookieParser());
 
 app.use(bodyParser.json());
 

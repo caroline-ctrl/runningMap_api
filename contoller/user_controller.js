@@ -148,15 +148,17 @@ exports.login = (req, res) => {
 
 
 // getByPseudo
+// 
+// return object user
 exports.getByPseudo = (req, res) => {
-    const pseudo = req.cookie.pseudo;
-    UserModel.findOne({pseudo: pseudo})
+    UserModel.findOne({pseudo: req.body.pseudo})
     .then(user => {
         res.status(200).json(user)
     }).catch(err => {
         res.status(400).json(err)
     })
 }
+
 
 
 // exports.hashPassword = (req, res) => {
