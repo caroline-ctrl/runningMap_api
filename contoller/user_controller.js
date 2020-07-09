@@ -99,25 +99,41 @@ exports.updateUser = (req, res) => {
 
 // update password
 exports.updatePsswd = (req, res) => {
-    const passHash = req.body.oldpPasswd;
-    const passNew = req.body.newPasswd;
-    const compare = bcrypt.compareSync(passNew, passHash);
+    const passOld = req.body.oldPasswd;
+    const passNew = req.body.NewPasswd;
+    const pseudo = req.body.pseudo;
+    const id = req.params.id;
 
-    const id = req.params._id;
+    // je recupère l'objet user en fonction du pseudo
+    UserModel.findOne({pseudo: pseudo}, (error, match) => {
+        if(match !== null) {
+            // je compare l'ancien mp avec celui en bdd
+            const compare = bcrypt.compareSync(passOld, match.password);
+            console.log(compare);
 
-    if (compare){
-        UserModel.findByIdAndUpdate(id, {
-            password: bcrypt.hashSync(passNew)
-        }).then(() => {
-            res.status(200).json({
-                message: "Mot de passe modifié modifié"
-            })    
-        }).catch(err => {
-            res.status(400).json(err)
-        })
-    } else {
-        console.log('Votre ancien mot de passe n\est pas bon');
-    }
+            if(compare){
+                UserModel.findByIdAndUpdate(id, {
+                    firstname: match.firstname,
+                    lastname: match.lastname,
+                    pseudo: pseudo,
+                    mail: match.mail,
+                    city: match.city,
+                    gender: match.gender,
+                    age: match.age,
+                    password: bcrypt.hashSync(passNew),
+                    is_active: match.is_active
+                }).then(() => {
+                    res.status(200).json({
+                        message: "mot de passe modifié"
+                    });
+                }).catch(err => {
+                    res.status(400).json(err);
+                });
+            } else {
+                console.log('Votre ancien mot de passe n\'est pas bon.')
+            }
+        }
+    })
 };
 
 
@@ -162,13 +178,19 @@ exports.login = (req, res) => {
     // match renferme l'objet user
     UserModel.findOne({mail: mail}, (error, match) => {
         if(match !== null){
-            bcrypt.compareSync(pass, match.password);
+            const compare = bcrypt.compareSync(pass, match.password);
+
+            if(compare){
+                UserModel.findById(match._id).then(user => {
+                    res.status(200).json(user);
+                }).catch(err => {
+                    res.status(400).json(err);
+                });
+            }
+            
         }
-    }).then(user => {
-        res.status(200).json(user)
-    }).catch(err => {
-        res.status(400).json(err)
-    })
+
+    });
 }
 
 
