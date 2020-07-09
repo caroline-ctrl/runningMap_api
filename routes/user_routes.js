@@ -12,6 +12,7 @@ router.get('/users', userController.getAll);
 router.post('/create', userController.createUser);
 router.post('/log', userController.login);
 router.post('/monCompte', userController.getByPseudo);
+router.post('/mail', userController.sendMail);
 
 
 module.exports = router;

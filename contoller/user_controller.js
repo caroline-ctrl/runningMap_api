@@ -1,5 +1,6 @@
 const UserModel = require('../models/User_model');
 const bcrypt = require('bcrypt-nodejs');
+const nodeMailer = require('nodemailer');
 
 // create user
 exports.createUser = (req, res) => {
@@ -105,11 +106,7 @@ exports.archive = (req, res) => {
             res.json({
                 message: "archivé"
             })
-        }).catch(err => {
-            res.json(err)
         })
-    }).catch(err => {
-        res.json(err)
     })
 }
 
@@ -132,26 +129,25 @@ exports.activeUser = (req, res) => {
 
 // login
 exports.login = (req, res) => {
-    const mail = req.body.mail;
-    const pass = req.body.password;
     // recupère le user a partir du mail, 
     // match renferme l'objet user
-    UserModel.findOne({
-        mail: mail
-    }, (error, match) => {
-        if (match !== null) {
-            const compare = bcrypt.compareSync(pass, match.password);
-
-            if (compare) {
+    UserModel.findOne({mail: req.body.mail}, (error, match) => {
+        if (bcrypt.compareSync(req.body.password, match.password)) {
+            if (match.is_active === true){
                 UserModel.findById(match._id).then(user => {
                     res.status(200).json(user);
                 }).catch(err => {
                     res.status(400).json(err);
                 });
+            } else if (match.is_active === false){
+                UserModel.findById(match._id).then(user => {
+                    user.update({is_active: true});
+                    res.status(200).json(user);
+                }).catch(err => {
+                    res.status(400).json(err);
+                });
             }
-
         }
-
     });
 }
 
@@ -167,4 +163,34 @@ exports.getByPseudo = (req, res) => {
         }).catch(err => {
             res.status(400).json(err)
         })
+}
+
+
+// Send mail
+exports.sendMail = (req, res) => {
+    const transporter = nodeMailer.createTransport ({
+        service: 'gmail',
+        auth: {
+            user: 'duon.caroline@gmail.com',
+            pass: 'caroD13570'
+        },
+        tls: {
+            rejectUnauthorized: false
+        }
+    });
+
+    const mailOption = {
+        from: "duon.caroline@gmail.com",
+        to: req.body.mail,
+        subject: "Mot de passe oublié",
+        html: 'Bonjour, copié ce code et clické sur le lien'
+    };
+
+    transporter.sendMail(mailOption, (err, info) => {
+        if (err) {
+            console.log(err)
+        } else {
+            console.log('Email sent: ' + info.response)
+        }
+    })
 }

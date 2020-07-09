@@ -46,3 +46,7 @@ const http = require('http');
 
 ## CRYPTAGE PASSWORD
 npm install bcrypt-nodejs
+
+
+## SEND MAIL
+npm install nodemailer
