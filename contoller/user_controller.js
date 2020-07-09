@@ -75,6 +75,7 @@ exports.updateUser = (req, res) => {
     let is_active = req.body.is_active;
     // let token = req.body.token;
 
+
     UserModel.findByIdAndUpdate(id, {
         firstname,
         lastname,
@@ -94,6 +95,30 @@ exports.updateUser = (req, res) => {
         res.status(400).json(err)
     })
 }
+
+
+// update password
+exports.updatePsswd = (req, res) => {
+    const passHash = req.body.oldpPasswd;
+    const passNew = req.body.newPasswd;
+    const compare = bcrypt.compareSync(passNew, passHash);
+
+    const id = req.params._id;
+
+    if (compare){
+        UserModel.findByIdAndUpdate(id, {
+            password: bcrypt.hashSync(passNew)
+        }).then(() => {
+            res.status(200).json({
+                message: "Mot de passe modifié modifié"
+            })    
+        }).catch(err => {
+            res.status(400).json(err)
+        })
+    } else {
+        console.log('Votre ancien mot de passe n\est pas bon');
+    }
+};
 
 
 // delete

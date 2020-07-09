@@ -6,6 +6,7 @@ const router = express.Router();
 router.put('/activer/:id', userController.activeUser);
 router.put('/archive/:id', userController.archive);
 router.put('/update/:id', userController.updateUser);
+router.put('/updatePass/:id', userController.updatePsswd);
 router.get('/user/:id', userController.getById);
 router.get('/users', userController.getAll);
 router.post('/create', userController.createUser);
