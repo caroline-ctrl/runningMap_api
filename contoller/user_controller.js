@@ -206,11 +206,15 @@ exports.securityCode = (req, res) => {
 
 // delete
 exports.deleteUser = (req, res) => {
-    UserModel.findByIdAndDelete({_id: req.params.id}).then(() => {
-        res.status(200).json({
-            message: "user supprimé"
+    UserModel.findOne({pseudo: req.body.pseudo}).then(user => {
+        res.status(200).json(user);
+
+        UserModel.findByIdAndDelete({_id: user._id}).then(() => {
+            res.status(200).json({
+                message: "user supprimé"
+            })
+        }).catch(err => {
+            res.json(err);
         })
-    }).catch(err => {
-        res.json(err);
     })
 }
