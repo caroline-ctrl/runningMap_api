@@ -50,3 +50,7 @@ npm install bcrypt-nodejs
 
 ## SEND MAIL
 npm install nodemailer
+
+
+## RANDOM
+npm install --save random

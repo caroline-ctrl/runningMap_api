@@ -35,13 +35,9 @@ const runningSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    is_active: {
-        type: Boolean,
-        required: true
-    },
     token: {
-        type: String,
-        required: false
+        type: Number,
+        required: true
     }
     // size: {
     //     type: Number,
