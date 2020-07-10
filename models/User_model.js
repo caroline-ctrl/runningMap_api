@@ -36,7 +36,7 @@ const runningSchema = mongoose.Schema({
         required: true
     },
     token: {
-        type: Number,
+        type: String,
         required: true
     }
     // size: {

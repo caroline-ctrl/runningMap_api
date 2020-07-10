@@ -12,6 +12,8 @@ router.post('/create', userController.createUser);
 router.post('/log', userController.login);
 router.post('/monCompte', userController.getByPseudo);
 router.post('/mail', userController.sendMail);
+router.post('/verifyCode', userController.securityCode);
+router.put('/forgetPassword', userController.changePassword);
 
 
 module.exports = router;
