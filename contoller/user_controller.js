@@ -91,7 +91,7 @@ exports.updatePassword = (req, res) => {
 
 // mp oublié
 exports.changePassword = (req, res) => {
-    const hashPass = bcrypt.hashSync(req.body.NewPasswd);
+    const hashPass = bcrypt.hashSync(req.body.password);
     UserModel.findOne({token: req.body.token}).then(user => {
         user.update({password: hashPass}).then(() => {
             res.json({
@@ -100,25 +100,8 @@ exports.changePassword = (req, res) => {
         }).catch(err => {
             res.json(err);
         })
-        console.log(user);
     }).catch(err => {
         res.json(err);
-    })
-}
-
-
-// delete  
-exports.archive = (req, res) => {
-    UserModel.findOne({
-        pseudo: req.body.pseudo
-    }).then(user => {
-        user.update({
-            is_active: false
-        }).then(() => {
-            res.json({
-                message: "archivé"
-            })
-        })
     })
 }
 
@@ -215,6 +198,18 @@ exports.securityCode = (req, res) => {
         mail: req.body.mail
     }).then(user => {
         res.status(200).json(user);
+    }).catch(err => {
+        res.json(err);
+    })
+}
+
+
+// delete
+exports.deleteUser = (req, res) => {
+    UserModel.findByIdAndDelete({_id: req.params.id}).then(() => {
+        res.status(200).json({
+            message: "user supprimé"
+        })
     }).catch(err => {
         res.json(err);
     })
