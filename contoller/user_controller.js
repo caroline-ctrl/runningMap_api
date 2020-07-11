@@ -94,9 +94,7 @@ exports.changePassword = (req, res) => {
     const hashPass = bcrypt.hashSync(req.body.password);
     UserModel.findOne({token: req.body.token}).then(user => {
         user.update({password: hashPass}).then(() => {
-            res.json({
-                message: "ok ok"
-            })
+            res.json(user)
         }).catch(err => {
             res.json(err);
         })
