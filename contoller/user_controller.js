@@ -6,8 +6,10 @@ const random = require('random');
 
 // create user
 exports.createUser = (req, res) => {
+    const imageUrl = `${req.protocol}://${req.get('host')}/images/${req.body.avatar}`;
+
     const userInstance = new UserModel({
-        avatar: req.body.avatar,
+        avatar: imageUrl,
         firstname: req.body.firstname,
         lastname: req.body.lastname,
         pseudo: req.body.pseudo,
@@ -51,8 +53,11 @@ exports.getById = (req, res) => {
 
 // update
 exports.updateUser = (req, res) => {
+    // const thingObject = JSON.parse(req.body.avatar);
+    const fileNameAvatar = req.body.avatar;
+    const imageUrl = `${req.protocol}://${req.get('host')}/images/${fileNameAvatar}`;
     UserModel.findByIdAndUpdate(req.params.id, {
-        avatar: req.body.avatar,
+        avatar: imageUrl,
         firstname: req.body.firstname,
         lastname: req.body.lastname,
         pseudo: req.body.pseudo,

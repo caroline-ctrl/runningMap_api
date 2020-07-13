@@ -1,9 +1,10 @@
 const userController = require('../contoller/user_controller');
 const express = require('express');
+const multer = require('../middleware/multer-config');
 
 const router = express.Router();
 
-router.put('/update/:id', userController.updateUser);
+router.put('/update/:id', multer, userController.updateUser);
 router.get('/user/:id', userController.getById);
 router.delete('/delete/:id', userController.deleteUser);
 router.put('/newPassword', userController.updatePassword);
