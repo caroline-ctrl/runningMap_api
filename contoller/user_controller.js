@@ -7,6 +7,7 @@ const random = require('random');
 // create user
 exports.createUser = (req, res) => {
     const userInstance = new UserModel({
+        avatar: req.body.avatar,
         firstname: req.body.firstname,
         lastname: req.body.lastname,
         pseudo: req.body.pseudo,
@@ -24,7 +25,6 @@ exports.createUser = (req, res) => {
     }).catch(err => {
         res.status(400).json(err)
     })
-
 };
 
 
@@ -52,6 +52,7 @@ exports.getById = (req, res) => {
 // update
 exports.updateUser = (req, res) => {
     UserModel.findByIdAndUpdate(req.params.id, {
+        avatar: req.body.avatar,
         firstname: req.body.firstname,
         lastname: req.body.lastname,
         pseudo: req.body.pseudo,
