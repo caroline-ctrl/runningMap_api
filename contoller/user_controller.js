@@ -86,7 +86,11 @@ exports.updatePassword = (req, res) => {
             user.update({
                 password: newPassword
             }).then(() => {
-                res.send("Ca marche");
+                res.status(200).json({
+                    message: 'mot de passe modifié'
+                })
+            }).catch(err => {
+                res.json(err);
             });
         } else {
             res.send("erreur");

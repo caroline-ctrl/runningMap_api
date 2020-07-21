@@ -8,6 +8,8 @@ const path = require('path');
 
 const app = express();
 
+app.use(cors());
+
 mongoose.connect('mongodb+srv://carod:clemL34270+@cluster0-fbriu.gcp.mongodb.net/running_map?retryWrites=true&w=majority', {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -24,8 +26,6 @@ app.use(bodyParser.urlencoded({
 app.use(cookieParser());
 
 app.use(bodyParser.json());
-
-app.use(cors());
 
 app.use(userRoute);
 
