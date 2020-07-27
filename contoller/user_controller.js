@@ -102,15 +102,25 @@ exports.updatePassword = (req, res) => {
 // mp oublié
 exports.changePassword = (req, res) => {
     const hashPass = bcrypt.hashSync(req.body.password);
-    UserModel.findOne({token: req.body.token}).then(user => {
-        user.update({password: hashPass}).then(() => {
-            res.json(user)
+    UserModel.findOneAndUpdate({token: req.body.token},
+        {password: hashPass}).then(user => {
+            res.json(user);
         }).catch(err => {
-            res.json(err);
+            res.json(err)
         })
-    }).catch(err => {
-        res.json(err);
-    })
+    // const hashPass = bcrypt.hashSync(req.body.password);
+    // UserModel.findOne({token: req.body.token}).then(user => {
+    //     res.json(user);
+    //     user.update({password: hashPass}).then(() => {
+    //         res.json({
+    //             message: 'password modifié'
+    //         })
+    //     }).catch(err => {
+    //         res.json(err);
+    //     })
+    // }).catch(err => {
+    //     res.json(err);
+    // })
 }
 
 
