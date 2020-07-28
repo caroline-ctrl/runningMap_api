@@ -9,11 +9,12 @@ const path = require('path');
 const app = express();
 
 // app.use(cors());
-app.use((req, res, next) => {
+/*app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header("Access-Control-Allow-Headers", "*");
     next();
-})
+})*/
+app.use(cors({origin: '*'}));
 
 mongoose.connect('mongodb+srv://carod:clemL34270+@cluster0-fbriu.gcp.mongodb.net/running_map?retryWrites=true&w=majority', {
     useNewUrlParser: true,
