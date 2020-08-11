@@ -189,7 +189,7 @@ exports.sendMail = (req, res) => {
         html: 'Bonjour,<br> Voici le code a renseigner <b>' + securityCode + '</b>'
     };
 
-    if (Object.keys(this.checkMail()).length > 0){
+    if (Object.keys(this.checkMail().user).length > 0){
         transporter.sendMail(mailOption, (err, info) => {
             if (err) {
                 console.log(err)
