@@ -155,6 +155,17 @@ exports.getByPseudo = (req, res) => {
         })
 }
 
+// verification mail lors du mp oublié
+exports.checkMail = (req, res) => {
+    UserModel.findOne({
+        mail: req.body.mail
+    }).then(user => {
+        res.status(200).json(user)
+    }).catch(err => {
+        res.json(err)
+    })
+}
+
 
 // Send mail
 exports.sendMail = (req, res) => {
@@ -178,13 +189,19 @@ exports.sendMail = (req, res) => {
         html: 'Bonjour,<br> Voici le code a renseigner <b>' + securityCode + '</b>'
     };
 
-    transporter.sendMail(mailOption, (err, info) => {
-        if (err) {
-            console.log(err)
-        } else {
-            console.log('Email sent: ' + info.response)
-        }
-    })
+    if (this.checkMail){
+        transporter.sendMail(mailOption, (err, info) => {
+            if (err) {
+                console.log(err)
+            } else {
+                console.log('Email sent: ' + info.response)
+            }
+        })
+    }else{
+        res.json({
+            message: "L'adresse mail n'existe pas"
+        })
+    }
 
     UserModel.findOne({
         mail: req.body.mail
