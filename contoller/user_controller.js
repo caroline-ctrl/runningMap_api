@@ -210,7 +210,9 @@ exports.sendMail = (req, res) => {
                 res.json(err);
             })
         } else if (Object.keys(user).length === 0) {
-            console.log("l'adresse mail n'existe pas")
+            res.json({
+                message: "l'adresse mail n'existe pas"
+            })
         }
     }).catch(err => {
         res.json(err)
