@@ -204,17 +204,17 @@ exports.sendMail = (req, res) => {
                     token: securityCode
             }).then(() => {
                 res.status(200).json({
-                    message: "token enregisté" + securityCode
+                    message: "token enregisté"
                 })
             }).catch(err => {
                 res.json(err);
             })
-        } else if (Object.keys(user).length === 0) {
+        }
             res.json({
                 user,
                 message: "l'adresse mail n'existe pas"
             })
-        }
+        
     }).catch(err => {
         res.json(err)
     })
