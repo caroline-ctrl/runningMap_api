@@ -192,9 +192,7 @@ exports.sendMail = (req, res) => {
         user.update({
             token: securityCode
         }).then(() => {
-            res.status(200).json({
-                message: "token enregisté"
-            })
+            res.status(200).json(user)
         }).catch(err => {
             res.json(err);
         })
