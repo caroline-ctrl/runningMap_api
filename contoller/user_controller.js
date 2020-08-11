@@ -192,27 +192,30 @@ exports.sendMail = (req, res) => {
     UserModel.findOne({
         mail: req.body.mail
     }).then(user => {
-        res.status(200).json(user)
-        transporter.sendMail(mailOption, (err, info) => {
-            if (err) {
-                console.log(err)
-            } else {
-                console.log('Email sent: ' + info.response)
-            }
-        })
-        user.update({
-                token: securityCode
-        }).then(() => {
-            res.status(200).json({
-                message: "token enregisté"
+        if (user !== 'null'){
+            transporter.sendMail(mailOption, (err, info) => {
+                if (err) {
+                    console.log(err)
+                } else {
+                    console.log('Email sent: ' + info.response)
+                }
             })
-        }).catch(err => {
-            res.json(err);
-        })
+            user.update({
+                    token: securityCode
+            }).then(() => {
+                res.status(200).json({
+                    message: "token enregisté"
+                })
+            }).catch(err => {
+                res.json(err);
+            })
+        } else {
+            res.json({
+                message: "L'adresse mail n'existe pas"
+            })
+        }
     }).catch(err => {
-        res.json({
-            message: "L'adresse mail n'existe pas"
-        })
+        res.json(err)
     })
 
 
