@@ -155,17 +155,6 @@ exports.getByPseudo = (req, res) => {
         })
 }
 
-// verification mail lors du mp oublié
-exports.checkMail = (req, res) => {
-    UserModel.findOne({
-        mail: req.body.mail
-    }).then(user => {
-        res.status(200).json(user)
-    }).catch(err => {
-        res.json(err)
-    })
-}
-
 
 // Send mail
 exports.sendMail = (req, res) => {
@@ -189,53 +178,29 @@ exports.sendMail = (req, res) => {
         html: 'Bonjour,<br> Voici le code a renseigner <b>' + securityCode + '</b>'
     };
 
+    transporter.sendMail(mailOption, (err, info) => {
+        if (err) {
+            console.log(err)
+        } else {
+            console.log('Email sent: ' + info.response)
+        }
+    })
+
     UserModel.findOne({
         mail: req.body.mail
     }).then(user => {
-        if (Object.keys(user).length > 0){
-            transporter.sendMail(mailOption, (err, info) => {
-                if (err) {
-                    console.log(err)
-                } else {
-                    console.log('Email sent: ' + info.response)
-                }
+        user.update({
+            token: securityCode
+        }).then(() => {
+            res.status(200).json({
+                message: "token enregisté"
             })
-            user.update({
-                    token: securityCode
-            }).then(() => {
-                res.status(200).json({
-                    message: "token enregisté"
-                })
-            }).catch(err => {
-                res.json(err);
-            })
-        } else if (Object.keys(user).length == 0) {
-            res.json({
-                user,
-                message: "l'adresse mail n'existe pas"
-            })
-        }
+        }).catch(err => {
+            res.json(err);
+        })
     }).catch(err => {
         res.json(err)
     })
-
-
-
-    // UserModel.findOne({
-    //     mail: req.body.mail
-    // }).then(user => {
-    //     user.update({
-    //         token: securityCode
-    //     }).then(() => {
-    //         res.status(200).json({
-    //             message: "token enregisté"
-    //         })
-    //     }).catch(err => {
-    //         res.json(err);
-    //     })
-    // }).catch(err => {
-    //     res.json(err)
-    // })
 }
 
 
