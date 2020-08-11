@@ -164,7 +164,7 @@ exports.sendMail = (req, res) => {
         host: "smtp.gmail.com",
         auth: {
             user: 'duon.caroline@gmail.com',
-            pass: 'caroD13570'
+            pass: 'caroD34270*'
         },
         tls: {
             rejectUnauthorized: false
