@@ -192,7 +192,7 @@ exports.sendMail = (req, res) => {
     UserModel.findOne({
         mail: req.body.mail
     }).then(user => {
-        if (user !== 'null'){
+        if (Object.keys(user).length > 0){
             transporter.sendMail(mailOption, (err, info) => {
                 if (err) {
                     console.log(err)
