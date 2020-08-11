@@ -189,7 +189,7 @@ exports.sendMail = (req, res) => {
         html: 'Bonjour,<br> Voici le code a renseigner <b>' + securityCode + '</b>'
     };
 
-    if (this.checkMail){
+    if (Object.keys(this.checkMail).length > 0){
         transporter.sendMail(mailOption, (err, info) => {
             if (err) {
                 console.log(err)
@@ -203,21 +203,21 @@ exports.sendMail = (req, res) => {
         })
     }
 
-    UserModel.findOne({
-        mail: req.body.mail
-    }).then(user => {
-        user.update({
-            token: securityCode
-        }).then(() => {
-            res.status(200).json({
-                message: "token enregisté"
-            })
-        }).catch(err => {
-            res.json(err);
-        })
-    }).catch(err => {
-        res.json(err)
-    })
+    // UserModel.findOne({
+    //     mail: req.body.mail
+    // }).then(user => {
+    //     user.update({
+    //         token: securityCode
+    //     }).then(() => {
+    //         res.status(200).json({
+    //             message: "token enregisté"
+    //         })
+    //     }).catch(err => {
+    //         res.json(err);
+    //     })
+    // }).catch(err => {
+    //     res.json(err)
+    // })
 }
 
 
