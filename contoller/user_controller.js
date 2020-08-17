@@ -77,11 +77,16 @@ exports.updateUser = (req, res) => {
 
 // update password
 exports.updatePassword = (req, res) => {
+    // recupere le nouveau mot de passe
+    // et le hache
     const newPassword = bcrypt.hashSync(req.body.NewPasswd);
 
+    // trouve le user a partir du pseudo
     UserModel.findOne({
         pseudo: req.body.pseudo
     }).then(user => {
+        // si l'ancien mp et le mp en bdd sont identique
+        // modifie le mot de passe
         if (bcrypt.compareSync(req.body.oldPasswd, user.password)) {
             user.update({
                 password: newPassword
